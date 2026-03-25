@@ -3,7 +3,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDE7-VLK2jf_TngFAUoVZCBfws3M5VXLZM",
+  apiKey: "AIzaSyCH8AnbR1Tu91iDGTUIJeW_jzY4l5zwvDM",
   authDomain: "language-learning-platfo-fa50f.firebaseapp.com",
   projectId: "language-learning-platfo-fa50f",
   storageBucket: "language-learning-platfo-fa50f.firebasestorage.app",
