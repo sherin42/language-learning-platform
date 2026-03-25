@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Lesson | LangLearn Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Top Navigation Bar */
+    .top-nav {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .admin-badge {
+  background: linear-gradient(135deg,#ffc107,#ff9800);
+  padding: .4rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+    .back-link {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.3s;
+      cursor: pointer; /* ✅ FIX */
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+      color: white;
+    }
+
+/* MAIN WRAPPER */
+.main-wrapper{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:3rem 1rem;
+}
+
+/* FORM CARD */
+.add-lesson-section{
+    width:100%;
+    max-width:950px;
+    background:#ffffff;
+    border-radius:20px;
+    padding:3rem;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* HEADER */
+.section-title{
+    font-size:1.9rem;
+    font-weight:700;
+    color:#0f2027;
+}
+
+.section-subtitle{
+    color:#666;
+    margin-bottom:2rem;
+}
+
+/* FORM */
+.form-label{
+    font-weight:600;
+    color:#2c5364;
+}
+
+.form-control{
+    border-radius:10px;
+    padding:.7rem 1rem;
+    border:2px solid #e0e0e0;
+}
+
+.form-control:focus{
+    border-color:#ffc107;
+    box-shadow:0 0 0 .2rem rgba(255,193,7,.15);
+}
+
+textarea.form-control{
+    min-height:160px;
+    resize:vertical;
+}
+
+/* BUTTON */
+.btn-primary{
+    background:linear-gradient(135deg,#ffc107,#ff9800);
+    border:none;
+    font-weight:600;
+    padding:.9rem;
+    border-radius:10px;
+    color:#333;
+    transition:.3s;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(255,193,7,.4);
+}
+
+/* MESSAGE */
+#lessonMsg{
+    display:none;
+    margin-top:1rem;
+    padding:.8rem;
+    border-left:4px solid #28a745;
+    background:#e9f7ef;
+    font-weight:600;
+}
+
+#lessonMsg.show{
+    display:block;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .add-lesson-section{
+        padding:2rem 1.5rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <div>
+      <span class="brand">LangLearn</span>
+      <span class="admin-badge ms-2">ADMIN</span>
+    </div>
+      <a href="admin.html" class="back-link">
+        ⬅ Back
+      </a>
+    </div>
+  </nav>
+
+<!-- MAIN CONTENT -->
+<div class="main-wrapper">
+    <div class="add-lesson-section">
+
+        <h3 class="section-title">➕ Add New Lesson</h3>
+        <p class="section-subtitle">Create structured learning content for your students</p>
+
+        <form id="lessonForm">
+
+            <!-- BASIC INFO -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Language</label>
+                    <select id="lessonLanguage" class="form-control" required>
+                        <option value="">Select Language</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Lesson Category</label>
+                    <select id="lessonCategory" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lesson Title</label>
+                <input type="text" id="lessonTitle" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Short Description</label>
+                <input type="text" id="lessonDescription" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lesson Order</label>
+                <input type="number" id="lessonOrder" class="form-control" min="1" required>
+                <small class="text-muted">Controls sequence inside category</small>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Lesson Content</label>
+                <textarea id="lessonContent" class="form-control" required></textarea>
+            </div>
+
+            <hr class="my-4">
+
+            <h6 class="fw-bold mb-3 text-secondary">Media (Optional)</h6>
+
+            <div class="mb-3">
+                <label class="form-label">Lesson Image URL</label>
+                <input type="text" id="lessonImageUrl" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Video Type</label>
+                <select id="videoType" class="form-control">
+                    <option value="">No Video</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="uploaded">Uploaded Video</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lesson Video URL</label>
+                <input type="text" id="videoUrl" class="form-control">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Lesson Audio URL</label>
+                <input type="text" id="lessonAudioUrl" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                ✨ Create Lesson
+            </button>
+
+        </form>
+
+        <div id="lessonMsg"></div>
+
+    </div>
+</div>
+
+<!-- SCRIPTS -->
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/lessons.js"></script>
+<script type="module" src="js/load-languages.js"></script>
+
+</body>
+</html>

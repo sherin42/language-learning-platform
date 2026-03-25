@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin | Manage Lessons</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0;
+}
+
+/* NAV */
+.top-nav {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+    }
+
+.admin-badge {
+  background: linear-gradient(135deg,#ffc107,#ff9800);
+  padding: .4rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.back-link {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.3s;
+      cursor: pointer; /* ✅ FIX */
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+      color: white;
+    }
+
+/* CONTAINER */
+.container {
+  max-width: 1400px;
+  margin:auto;
+  padding:2rem;
+}
+
+/* LESSON GRID */
+.admin-lessons-list {
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+  gap:1.5rem;
+}
+
+.lesson-card {
+  background:#fff;
+  padding:1.5rem;
+  border-radius:15px;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.lesson-actions {
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+/* MODAL */
+#editOverlay {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+#editBox {
+  background:#fff;
+  width:90%;
+  max-width:650px;
+  max-height:85vh;
+  overflow-y:auto;
+  padding:30px;
+  border-radius:20px;
+  position:relative;
+}
+
+#closeEdit {
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:22px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+#editBox label {
+  font-weight:600;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="top-nav">
+  <div class="nav-container">
+    <div>
+      <span class="brand">LangLearn</span>
+      <span class="admin-badge ms-2">ADMIN</span>
+    </div>
+    <a href="admin.html" class="back-link">⬅ Back</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <h2 class="text-white mb-4">📚 Manage Lessons</h2>
+
+  <div class="mb-4">
+    <label class="form-label text-white">Select Language</label>
+    <select id="adminLanguageSelect" class="form-control"></select>
+  </div>
+
+  <div id="adminLessonsContainer"></div>
+
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editOverlay">
+  <div id="editBox">
+
+    <span id="closeEdit">✖</span>
+
+    <h4 class="mb-3">Edit Lesson</h4>
+
+    <label>Title</label>
+    <input id="editTitle" class="form-control">
+
+    <label>Description</label>
+    <textarea id="editDescription" class="form-control"></textarea>
+
+    <label>Content</label>
+    <textarea id="editContent" class="form-control"></textarea>
+
+    <label>Category</label>
+    <select id="editCategory" class="form-control">
+      <option>Beginner</option>
+      <option>Intermediate</option>
+      <option>Advanced</option>
+    </select>
+
+    <label>Language</label>
+    <select id="editLanguage" class="form-control"></select>
+
+    <label>Image URL</label>
+    <input id="editImageUrl" class="form-control">
+
+    <label>Video URL</label>
+    <input id="editVideoUrl" class="form-control">
+
+    <label>Audio URL</label>
+    <input id="editAudioUrl" class="form-control">
+
+    <div class="mt-4 d-flex gap-2">
+      <button type="button" id="saveEditBtn" class="btn btn-warning flex-fill">
+        Save
+      </button>
+
+      <button type="button" id="cancelEditBtn" class="btn btn-secondary flex-fill">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/admin-lessons.js"></script>
+
+</body>
+</html>

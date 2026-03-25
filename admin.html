@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | LangLearn</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  width:260px;
+  height:100vh;
+  background:#111;
+  padding:20px;
+  color:#fff;
+}
+
+.sidebar h4{
+  color:#ffc107;
+}
+
+.sidebar a{
+  display:block;
+  color:#bbb;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:5px;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+  background:#ffc107;
+  color:#000;
+}
+
+/* MAIN */
+.main{
+  margin-left:260px;
+  padding:30px;
+}
+
+.topbar{
+  background:rgba(255,255,255,0.1);
+  padding:15px 25px;
+  border-radius:15px;
+  color:#fff;
+}
+
+/* STATS */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-top:20px;
+}
+
+.stat-card{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  transition:0.3s;
+}
+
+.stat-card:hover{
+  transform:translateY(-5px);
+}
+
+.stat-card h3{
+  font-weight:800;
+}
+
+/* CONTENT */
+.content-box{
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  margin-top:30px;
+}
+
+/* ACTIVITY */
+.activity-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.activity-card{
+  background:#f8f9fa;
+  padding:15px;
+  border-radius:12px;
+}
+
+.activity-item{
+  font-size:0.9rem;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.badge-time{
+  font-size:0.7rem;
+  background:#e0e0e0;
+  color:#333;
+}
+
+/* TOP USERS */
+.rank{
+  font-weight:bold;
+  margin-right:10px;
+}
+
+.gold{ color:gold; }
+.silver{ color:silver; }
+.bronze{ color:#cd7f32; }
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h4>LangLearn 👑</h4>
+
+  <a class="active">📌 Dashboard</a>
+
+  <div class="mt-4 text-warning small">Languages</div>
+  <a href="add_language.html">➕ Add Language</a>
+  <a href="manage_language.html">✏ Manage Language</a>
+
+  <div class="mt-4 text-warning small">Lessons</div>
+  <a href="add_lesson.html">📚 Add Lessons</a>
+  <a href="admin-lessons.html">📚 Manage Lessons</a>
+
+  <div class="mt-4 text-warning small">Users</div>
+  <a href="manage_user.html">👥 Manage Users</a>
+  <a href="manage_progress.html">📊 Manage Progress</a>
+
+  <div class="mt-4 text-warning small">System</div>
+  <a href="#" id="logoutBtn">🚪 Logout</a>
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+    <h4>📊 Dashboard Overview</h4>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3 id="totalLanguages">0</h3>
+      <p>Languages</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalLessons">0</h3>
+      <p>Lessons</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalUsers">0</h3>
+      <p>Users</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalQuizAttempts">0</h3>
+      <p>Quiz Attempts</p>
+    </div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="content-box">
+    <h5>⚡ Recent Activity</h5>
+
+    <div class="activity-grid">
+
+      <div class="activity-card">
+        <h6>👤 Users</h6>
+        <div id="recentUsers"></div>
+      </div>
+
+      <div class="activity-card">
+        <h6>📝 Quiz Attempts</h6>
+        <div id="recentQuizAttempts"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOP USERS -->
+  <div class="content-box">
+    <h5>🏆 Top Learners</h5>
+    <div id="topUsers"></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="content-box">
+    <h5>📊 Analytics</h5>
+
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="languageChart"></canvas>
+      </div>
+
+      <div class="col-md-6">
+        <canvas id="activityChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module" src="js/admin-dashboard.js"></script>
+<script type="module" src="js/admin.js"></script>
+
+</body>
+</html>

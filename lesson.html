@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson | LangLearn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 212, 255, 0.06);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 18s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(0, 212, 255, 0.08);
+            border-radius: 50%;
+            bottom: -175px;
+            left: -175px;
+            animation: float 14s infinite ease-in-out reverse;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-25px) translateX(25px); }
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-link {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+            color: white;
+        }
+
+        /* Lesson Container */
+        .lesson-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lesson Header Card */
+        .lesson-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        
+
+        #lessonTitle {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0f2027;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .lesson-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        /* Lesson Content Card */
+        .lesson-content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        #lessonContent {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f2027;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 153, 204, 0.2) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Action Buttons */
+        .action-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.6s ease 0.4s both;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #completeLessonBtn {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        #completeLessonBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.4);
+            background: linear-gradient(135deg, #0099cc 0%, #00d4ff 100%);
+        }
+
+        #completeLessonBtn:active {
+            transform: translateY(-1px);
+        }
+
+        #progressMsg {
+            color: #00d4ff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .next-lesson-btn {
+  margin-top: 15px;
+  background: linear-gradient(135deg, #00c853, #00e676);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(0, 200, 83, 0.3);
+}
+
+.next-lesson-btn:hover {
+  transform: translateY(-3px);
+}
+
+.next-lesson-btn .arrow {
+  transition: 0.3s;
+}
+
+.next-lesson-btn:hover .arrow {
+  transform: translateX(5px);
+}
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lesson-container {
+                padding: 1rem;
+            }
+            .nav-container {
+                padding: 0 1rem;
+            }
+            #lessonTitle {
+                font-size: 2rem;
+            }
+            .lesson-header,
+            .lesson-content-card,
+            .action-section {
+                padding: 1.5rem;
+            }
+            .action-section {
+                flex-direction: column;
+            }
+            #completeLessonBtn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="brand">LangLearn</div>
+            <a href="all_lessons.html" class="back-link">
+                <span>⬅</span>
+                <span>Back</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Lesson Container -->
+    <div class="lesson-container">
+        <!-- Lesson Header -->
+        <div class="lesson-header">
+            <h2 id="lessonTitle">Loading Lesson...</h2>
+            
+        </div>
+        <p id="lessonProgress" style="
+font-weight:600;
+color:#00d4ff;
+margin-bottom:15px;">
+</p>
+
+        <!-- Lesson Content -->
+        <div class="lesson-content-card">
+  <div class="content-section">
+    <h3 class="section-title">
+      <span class="section-icon">📖</span>
+      Lesson Content
+    </h3>
+
+    <!-- DESCRIPTION -->
+    <p id="lessonDescription" style="margin-bottom:1.5rem;"></p>
+
+    <!-- IMAGE -->
+    <img id="lessonImage" style="display:none; width:100%; border-radius:15px; margin-bottom:1.5rem;" />
+
+    <!-- VIDEO -->
+    <div id="lessonVideo" style="margin-bottom:1.5rem;"></div>
+
+    <!-- AUDIO -->
+    <audio id="lessonAudio" controls style="display:none; width:100%; margin-bottom:1.5rem;"></audio>
+
+    <!-- CONTENT -->
+    <p id="lessonContent">Loading content...</p>
+  </div>
+</div>
+
+
+        <!-- Action Section -->
+        <div class="action-section">
+            <button id="completeLessonBtn">
+                <span>✅</span>
+                <span>Mark as Completed</span>
+            </button>
+            
+            <a id="startQuizBtn" class="btn btn-warning mt-3">
+  📝 Start Quiz
+</a>
+
+            <p id="progressMsg"></p>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/lesson.js"></script>
+</body>
+</html>

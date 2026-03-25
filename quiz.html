@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz | LangLearn</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+background:linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);
+min-height:100vh;
+padding:2rem 1rem;
+}
+
+/* NAV */
+
+.top-nav{
+background:rgba(15,32,39,0.95);
+padding:1rem 0;
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:1000;
+}
+
+.nav-container{
+max-width:1200px;
+margin:auto;
+padding:0 2rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.brand{
+font-size:1.8rem;
+font-weight:800;
+color:white;
+}
+
+.back-link {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+            color: white;
+        }
+
+.back-link:active {
+    transform: scale(0.95);
+}
+
+/* QUIZ BOX */
+
+.quiz-box{
+max-width:800px;
+margin:6rem auto 2rem;
+background:white;
+padding:3rem;
+border-radius:20px;
+box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+
+h2{
+font-size:2rem;
+margin-bottom:2rem;
+color:#0f2027;
+}
+
+#quizContainer div{
+background:#f5f7fa;
+padding:1rem;
+border-radius:10px;
+margin-bottom:1rem;
+}
+
+#quizContainer p{
+font-weight:600;
+margin-bottom:10px;
+}
+
+label{
+display:block;
+margin-bottom:6px;
+cursor:pointer;
+}
+
+input[type="radio"]{
+margin-right:8px;
+}
+
+/* BUTTON */
+
+#submitQuizBtn{
+background:#00d4ff;
+border:none;
+color:white;
+padding:12px 20px;
+border-radius:10px;
+font-weight:700;
+cursor:pointer;
+width:100%;
+font-size:16px;
+}
+
+#submitQuizBtn:hover{
+background:#0099cc;
+}
+
+/* RESULT */
+
+#result{
+margin-top:30px;
+padding:20px;
+border-radius:12px;
+background:#eef9ff;
+border:2px solid #00d4ff;
+font-size:18px;
+font-weight:600;
+display:none;
+}
+
+/* NEXT BUTTON */
+
+.next-lesson-btn {
+  background: linear-gradient(135deg, #00c853, #00e676);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 200, 83, 0.3);
+}
+
+.next-lesson-btn .arrow {
+  transition: transform 0.3s ease;
+}
+
+.next-lesson-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0, 200, 83, 0.5);
+}
+
+.next-lesson-btn:hover .arrow {
+  transform: translateX(5px);
+}
+
+.next-lesson-btn:active {
+  transform: scale(0.95);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="top-nav">
+<div class="nav-container">
+<div class="brand">LangLearn</div>
+<a  id="backToLesson" class="back-link">⬅ Back to Lesson</a>
+</div>
+</nav>
+
+<div class="quiz-box">
+
+<h2>📝 Lesson Quiz</h2>
+
+<div id="quizContainer">
+<p>Loading quiz...</p>
+</div>
+
+<button id="submitQuizBtn">Submit Quiz</button>
+
+<!-- RESULT AREA -->
+<div id="result"></div>
+
+</div>
+
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/auth.js"></script>
+<script type="module" src="js/quiz.js"></script>
+
+</body>
+</html>

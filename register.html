@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | LangLearn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 40px 0;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: rgba(0, 212, 255, 0.08);
+            border-radius: 50%;
+            top: -225px;
+            left: -225px;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 50%;
+            bottom: -190px;
+            right: -190px;
+            animation: float 14s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) translateX(25px) rotate(180deg); }
+        }
+
+        .register-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .brand-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-body {
+            padding: 3rem 2.5rem;
+        }
+
+        .card-body h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f2027;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .card-body h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            border-radius: 2px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2c5364;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 212, 255, 0.15);
+            background: white;
+        }
+
+        .form-control:hover {
+            border-color: #00d4ff;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .password-strength.active {
+            display: block;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #ff4444;
+        }
+
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #ffaa00;
+        }
+
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #00d4ff;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.4);
+            background: linear-gradient(135deg, #0099cc 0%, #00d4ff 100%);
+        }
+
+        .btn-success:active {
+            transform: translateY(-1px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #0099cc;
+            text-decoration: underline;
+        }
+
+        /* Terms checkbox */
+        .form-check {
+            margin-top: 1rem;
+        }
+
+        .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: #00d4ff;
+            border-color: #00d4ff;
+        }
+
+        .form-check-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        .form-check-label a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .form-check-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Social registration */
+        .social-register {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .social-register p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .social-btn:hover {
+            border-color: #00d4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .back-home a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .back-home a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Benefits section */
+        .benefits {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: #2c5364;
+            font-size: 0.9rem;
+        }
+
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .benefit-icon {
+            width: 24px;
+            height: 24px;
+            background: #00d4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+            .brand-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-home">
+        <a href="index.html">← Back to Home</a>
+    </div>
+
+    <div class="register-container">
+        <div class="brand-header">
+            <h1>LangLearn</h1>
+            <p>Start your language learning journey today</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-center">Create Account</h3>
+                <p class="subtitle">Join thousands of language learners worldwide</p>
+
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Access to all language courses</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Personalized learning path</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Track your progress in real-time</span>
+                    </div>
+                </div>
+
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="registerName" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="registerPassword" class="form-control" placeholder="Create a strong password" required>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="password-strength-bar" id="strengthBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                        <label class="form-check-label" for="termsCheck">
+                            I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="social-register">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <button class="social-btn">
+                            <span>🔍</span> Google
+                        </button>
+                        <button class="social-btn">
+                            <span>📘</span> Facebook
+                        </button>
+                    </div>
+                </div>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="login.html">Login Here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength indicator
+        const passwordInput = document.getElementById('registerPassword');
+        const strengthIndicator = document.getElementById('passwordStrength');
+        const strengthBar = document.getElementById('strengthBar');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            if (password.length === 0) {
+                strengthIndicator.classList.remove('active');
+                return;
+            }
+
+            strengthIndicator.classList.add('active');
+            
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            strengthBar.className = 'password-strength-bar';
+            if (strength <= 2) {
+                strengthBar.classList.add('weak');
+            } else if (strength === 3) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('strong');
+            }
+        });
+    </script>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/register.js"></script>
+</body>
+</html>

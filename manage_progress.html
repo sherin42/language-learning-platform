@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Progress | LangLearn</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
+  color:#fff;
+}
+
+.main{
+  padding:30px;
+}
+
+/* NAV */
+.top-nav {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+    }
+
+.admin-badge {
+  background: linear-gradient(135deg,#ffc107,#ff9800);
+  padding: .4rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.back-link {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.3s;
+      cursor: pointer; /* ✅ FIX */
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+      color: white;
+    }
+
+
+/* Table */
+table{
+  background:#fff;
+  color:#333;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+th{
+  background:#f4f4f4;
+}
+
+th, td{
+  padding:12px;
+}
+
+.badge-complete{
+  background:#4caf50;
+}
+
+.badge-pending{
+  background:#ff9800;
+}
+</style>
+</head>
+
+<body>
+
+  <nav class="top-nav">
+  <div class="nav-container">
+    <div>
+      <span class="brand">LangLearn</span>
+      <span class="admin-badge ms-2">ADMIN</span>
+    </div>
+    <a href="admin.html" class="back-link">⬅ Back</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <h2 class="mb-4">📊 Manage User Progress</h2>
+
+<!-- STATS -->
+<div class="row mb-4 text-dark">
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h6>Total Users</h6>
+      <h3 id="totalUsers">0</h3>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h6>Active Users</h6>
+      <h3 id="activeUsers">0</h3>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h6>Avg Progress</h6>
+      <h3 id="avgProgress">0%</h3>
+    </div>
+  </div>
+
+</div>
+
+<!-- FILTERS -->
+<div class="row mb-3">
+
+  <div class="col-md-4">
+    <select id="languageFilter" class="form-control">
+      <option value="">All Languages</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <input
+      id="searchUser"
+      class="form-control"
+      placeholder="Search user...">
+  </div>
+
+</div>
+
+<!-- TABLE -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Language</th>
+      <th>Progress</th>
+      <th>Lessons</th>
+      <th>Last Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="progressContainer"></tbody>
+</table>
+
+</div>
+
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/manage_progress.js"></script>
+
+</body>
+</html>
